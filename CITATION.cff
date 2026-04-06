@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Wilhelem"
+  given-names: "Thomas"
+title: "Filtered Sequential Monte-Carlo Parameter Identification"
+version: 1.0.0
+date-released: 2026-04-06
+url: "https://github.com/ThomasWilhelem/filtered_sequential_montecarlo"
+preferred-citation:
+  type: article
+  authors:
+  - family-names: "Wilhelem"
+    given-names: "Thomas"
+  - family-names: "Okuda"
+    given-names: "Hiroyuki"
+  - family-names: "Suzuki"
+    given-names: "Tatsuya"
+  doi: "10.1587/transfun.E100.A.2095"
+  journal: "IEICE Transactions on Fundamentals of Electronics, Communications and Computer Sciences"
+  month: 10
+  title: "Identification of time-varying parameters of hybrid dynamical system models and its application to driving behavior"
+  volume: "E100.A"
+  issue: 10
+  year: 2017
+  start: 2095
+  end: 2105

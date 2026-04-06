@@ -1,0 +1,34 @@
+{
+    "model_type": "PWARX",
+    "identification_params": {
+        "identification_type": 2,
+        "resampling_type": 0,
+        "cst_ident_params": {"1": [0, 1], "2": [0, 1]},
+        "cst_n_iterations": 10,
+        "cst_n_stoRegV": 5,
+        "cst_sigma_p_initial": 1.0,
+        "cst_sigma_p_min": 0.0001,
+        "cst_decay_rate": 0.99,
+        "cst_n_resample": 10,
+        "cst_sample_mult": 5,
+        "n_pre_samples": 5,
+        "initial_param_range": [-5.0, 5.0],
+        "precision": "float64",
+        "likelihood_type": "cauchy",
+        "sigma_obs": 0.5,
+        "random_seed": 42,
+        "sigma_p": 0.05
+    },
+    "model_parameters": {
+        "number_modes": 2,
+        "number_params": 2
+    },
+    "learning_data": {
+        "data_type": 0,
+        "sigma_noise": 0.05,
+        "synth_data_time": [-1.0, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+        "synth_param_constant": [[1, 0.5], [-1.0, 2.0]],
+        "synth_param_variable_speed": [[12, 0], [6, 0]],
+        "synth_param_variable_value": [[0.1666, 1], [0.25, 1]]
+    }
+}
