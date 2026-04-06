@@ -211,17 +211,13 @@ This port does not include:
 
 The identified models are expressed as:
 
-$
-y(k) = f_m( u_m(k), θ_m(k) ) + e_m(k) \quad if \quad µ(k) = m
-$
+$$y(k) = f_m( u_m(k), θ_m(k) ) + e_m(k) \quad if \quad µ(k) = m$$
 
 where $`u`$ is the model input (composed of exogenous inputs and past outputs), $`y`$ is the model output, $`e_m`$ is the modeling error, $`µ`$ is the mode index vector, and $`θ_m(k)`$ is the **time-varying parameter vector of mode m at time step k**, defined over parameter space $`Θ_m`$. Each mode is handled independently, and time steps where a mode is not active (**mode output occlusion**) provide no observation for that mode's parameters. This parameter identification method can obviously be used for single mode models.
 
 The parameter identification problem is formulated in a Bayesian framework using the marginal posterior:
 
-$
-p(θ(k) \mid z(1:k)) = \dfrac{ p(z(k)|θ(k)) · p(θ(k)|z(1:k-1)) }{ p(z(k) \mid z(1:k-1)) }
-$
+$$p(θ(k) \mid z(1:k)) = \dfrac{ p(z(k)|θ(k)) · p(θ(k)|z(1:k-1)) }{ p(z(k) \mid z(1:k-1)) }$$
 
 where $`z(k)`$ is the observation. A nonparametric (particle-based) approach is used to represent this posterior without assuming a fixed functional form, enabling application to non-differentiable and heterogeneous nonlinear models.
 
@@ -229,9 +225,7 @@ where $`z(k)`$ is the observation. A nonparametric (particle-based) approach is 
 
 In conventional SIR particle filtering for parameter identification, the prior at time step *k* is conditioned on the previous time step *k-1*, making parameter dynamics implicit. In the method presented here, the **particle filter iterates over identification steps *i* rather than time steps *k***. The prior at iteration *i* is conditioned on the previous identification iteration *i-1* at the **same time step k**:
 
-$
-\theta^{i}_{ls}(k) \sim p\big(\theta^{i}(k) \mid \theta^{i-1}_{lr}(k)\big)
-$
+$$\theta^{i}_{ls}(k) \sim p\big(\theta^{i}(k) \mid \theta^{i-1}_{lr}(k)\big)$$
 
 This decouples the identification process from the time-smoothing process. The parameter time-dynamics are then **explicitly controlled** by a separate moving average smoothing step, tunable independently of the particle filter parameters.
 
@@ -241,17 +235,13 @@ The identification proceeds as an iterative process over the full time series (A
 
 **Step 1 — Sampling.** At each time step $`k`$ and for each mode $`m`$, a set of $`Ls`$ sampled particles is drawn from a Gaussian distribution centered on each of the $`Lr`$ resampled particles of the previous iteration $`i-1`$:
 
-$
-\theta^{m,i}_{ls}(k) \sim p\left( \theta^{m,i}(k) \mid \theta^{m,i-1}_{lr}(k) \right)
-$
+$$\theta^{m,i}_{ls}(k) \sim p\left( \theta^{m,i}(k) \mid \theta^{m,i-1}_{lr}(k) \right)$$
 
 The standard deviation $`σ_p`$ of this distribution controls the algorithm's exploration speed and convergence precision.
 
 **Step 2 — Importance weighting.** If the mode output is not occluded ($`µ(k) == m`$), particle weights are calculated from the observation likelihood:
 
-$
-w^{m,i}_{ls}(k) = p\left( y(k) \mid \theta^{m,i}_{ls}(k), u(k) \right)
-$
+$$w^{m,i}_{ls}(k) = p\left( y(k) \mid \theta^{m,i}_{ls}(k), u(k) \right)$$
 
 If the mode output is occluded, all particles are assigned equal weights. In practice, as noted in the paper, the weighting function $`p`$ need not be a formal probability density — an inverse-error surrogate (e.g., a negative power of the modeling error) is used, since in approximate modeling contexts the identification error is bounded by the modeling error itself, and a Bayesian-optimal weighting provides no practical advantage over a well-chosen surrogate.
 
@@ -259,27 +249,19 @@ If the mode output is occluded, all particles are assigned equal weights. In pra
 
 A smoothed estimate profile is then computed by a Gaussian-weighted moving average over all time steps:
 
-$
-\bar{\theta}^{m,i}(k) = \sum_{j=1}^{K} \left[ \hat{\theta}^{m,i}(j) \cdot g_n(j|k) \right]
-$
+$$\bar{\theta}^{m,i}(k) = \sum_{j=1}^{K} \left[ \hat{\theta}^{m,i}(j) \cdot g_n(j|k) \right]$$
 
 with
 
-$
-\hat{\theta}^{m,i}(k) = \arg\max_{\theta^{m,i}_{ls}(k) \in \Xi} \left( w^{m,i}_{ls}(k) \right)
-$
+$$\hat{\theta}^{m,i}(k) = \arg\max_{\theta^{m,i}_{ls}(k) \in \Xi} \left( w^{m,i}_{ls}(k) \right)$$
 
 where $`g_n`$ is a Gaussian pdf with standard deviation $`σ_g`$ — the primary tuning parameter for time-dynamics filtering. Smoothing weights for all particles are then computed as:
 
-$
-s^{m,i}_{ls}(k) = p \left( \bar{\theta}^{m,i}(k) \mid \theta^{m,i}_{ls}(k) \right)
-$
+$$s^{m,i}_{ls}(k) = p \left( \bar{\theta}^{m,i}(k) \mid \theta^{m,i}_{ls}(k) \right)$$
 
 Final weights combine importance weights and smoothing weights multiplicatively:
 
-$
-w s^{m,i}_{ls}(k) = w^{m,i}_{ls}(k) * s^{m,i}_{ls}(k)
-$
+$$w s^{m,i}_{ls}(k) = w^{m,i}_{ls}(k) * s^{m,i}_{ls}(k)$$
 
 **Step 4 — Resampling.** $`Lr`$ particles are resampled from the $`Ls`$ sampled particles using the final combined weights $`ws`$. The algorithm iterates until the modeling error stabilizes.
 
