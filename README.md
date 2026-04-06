@@ -1,8 +1,8 @@
-# Data Analysis Through Physical Models' Parameters Variations
+# Filtered Sequential Monte Carlo for time-varying model parameters analysis
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Python 3.14](https://img.shields.io/badge/benchmark_on_python-3.14-green.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: BSD-3](https://img.shields.io/badge/license-BSD--3--Clause-orange.svg)](https://opensource.org/license/bsd-3-clause)
 
 This repository contains a Python port of a MATLAB research codebase aimed at analyzing data through the time-variation of model parameters. The parameter identification method is designed to work with non-linear multi-mode models.
 
