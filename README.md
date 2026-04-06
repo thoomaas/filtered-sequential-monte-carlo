@@ -149,7 +149,7 @@ Standard identification methods for hybrid systems focus on time-invariant param
 
 The filtered SMC method implemented in this package was developed to address this gap: to **explicitly and separately control the parameter identification process and the parameter time-dynamics filtering**, while remaining applicable to nonlinear, non-differentiable, heterogeneous hybrid system models for which a closed-form solution is otherwise unavailable.
 
-**This framework is highly suited for situations where:**
+This framework is highly suited for situations where:
 
 - The hybrid system model structure (or other nonlinear expert model) is known.
 - Parameters have a direct physical meaning that must be preserved.
@@ -239,7 +239,7 @@ $$\theta^{m,i}_{ls}(k) \sim p\left( \theta^{m,i}(k) \mid \theta^{m,i-1}_{lr}(k) 
 
 The standard deviation $`σ_p`$ of this distribution controls the algorithm's exploration speed and convergence precision.
 
-**Step 2 — Importance weighting.** If the mode output is not occluded ($`µ(k) == m`$), particle weights are calculated from the observation likelihood:
+**Step 2 — Importance weighting.** If the mode output is not occluded ($`µ(k)==m`$), particle weights are calculated from the observation likelihood:
 
 $$w^{m,i}_{ls}(k) = p\left( y(k) \mid \theta^{m,i}_{ls}(k), u(k) \right)$$
 
