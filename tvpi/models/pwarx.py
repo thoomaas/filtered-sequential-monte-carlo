@@ -7,9 +7,9 @@ class PWARXModel(Model):
     The model is linear-in-parameters: y = sum(theta_m^T * [x; 1])
     """
 
-    def __init__(self, n_params: int):
-        self._n_params = n_params
-        self._param_names = [f"theta_{i+1}" for i in range(n_params)]
+    def __init__(self, n_inputs: int):
+        self._n_params = n_inputs + 1
+        self._param_names = [f"theta_{i+1}" for i in range(self._n_params)]
 
     @property
     def n_params(self) -> int:

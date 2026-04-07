@@ -181,8 +181,7 @@ def main():
         if learning_data['data_type'] == 1:
             # PWARX is a hybrid model -> Modes come from data clustering
             model_parameters['number_modes'] = len(np.unique(data['mode']))
-            num_regressors = data['x'].shape[0]
-            n_params = num_regressors + 1
+            n_inputs = data['x'].shape[0]
 
             # We must configure parameters for every mode found in the data
             pwarx_identified_cst = (0,1,2,)
@@ -198,9 +197,9 @@ def main():
 
         else:
             # For synthetic data, we use the values from the config dict
-            n_params = model_parameters['number_params']
+            n_inputs = model_parameters['number_params'] - 1
 
-        model = PWARXModel(n_params=n_params)
+        model = PWARXModel(n_inputs=n_inputs)
 
     # Assign the exact parameter count directly from the initialized model
     model_parameters['number_params'] = model.n_params

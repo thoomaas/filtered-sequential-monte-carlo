@@ -67,7 +67,7 @@ def main():
     print(f"\n[INFO] Saving results to: {results_dir}\n")
 
     # 3. Model & Data Initialization
-    model = PWARXModel(n_params=model_parameters['number_params'])
+    model = PWARXModel(n_inputs=model_parameters['number_params'] - 1)
     model_parameters['number_params'] = model.n_params
 
     data = generate_theoretical_example(model_parameters, learning_data, model)

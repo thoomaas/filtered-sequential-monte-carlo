@@ -56,7 +56,7 @@ def run_case(case_dir, update_baseline=False):
 
     # Instantiate Model
     if model_type == 'PWARX':
-        model = PWARXModel(n_params=model_params['number_params'])
+        model = PWARXModel(n_inputs=model_params['number_params'] - 1)
     elif model_type == 'Gipps':
         model = GippsModel()
     else:
