@@ -10,6 +10,14 @@ class GippsModel(Model):
         return 6
 
     @property
+    def n_inputs(self) -> int:
+        return 3
+
+    @property
+    def has_bias(self) -> bool:
+        return False
+
+    @property
     def param_names(self) -> list[str]:
         return self._param_names
 

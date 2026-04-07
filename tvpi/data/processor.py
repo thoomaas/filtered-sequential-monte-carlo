@@ -19,42 +19,46 @@ class DataProcessor:
         Loads data from Excel/CSV, applies delay, and performs clustering.
         config keys: 'file_path', 'y_column', 'x_columns', 'delay', 'clustering'
         """
-        file_path = config['file_path']
-        delay = config.get('delay', 0)
+        try:
+            file_path = config['file_path']
+            delay = config.get('delay', 0)
 
-        # Load file based on extension
-        if file_path.endswith('.csv'):
-            df = pd.read_csv(file_path)
-        else:
-            df = pd.read_excel(file_path)
+            # Load file based on extension
+            if file_path.endswith('.csv'):
+                df = pd.read_csv(file_path)
+            else:
+                df = pd.read_excel(file_path)
 
-        # Extract y (output)
-        y_col = config['y_column']
-        y_raw = df.iloc[:, y_col].values if isinstance(y_col, int) else df[y_col].values
+            # Extract y (output)
+            y_col = config['y_column']
+            y_raw = df.iloc[:, y_col].values if isinstance(y_col, int) else df[y_col].values
 
-        # Extract x (regressors)
-        x_cols = config['x_columns']
-        if isinstance(x_cols[0], int):
-            x_raw = df.iloc[:, x_cols].values.T
-        else:
-            x_raw = df[x_cols].values.T
+            # Extract x (regressors)
+            x_cols = config['x_columns']
+            if isinstance(x_cols[0], int):
+                x_raw = df.iloc[:, x_cols].values.T
+            else:
+                x_raw = df[x_cols].values.T
 
-        # Apply delay (aligning x_k with y_{k+delay})
-        K = len(y_raw)
-        x = x_raw[:, :K-delay]
-        y = y_raw[delay:]
+            # Apply delay (aligning x_k with y_{k+delay})
+            K = len(y_raw)
+            x = x_raw[:, :K-delay]
+            y = y_raw[delay:]
 
-        # Clustering
-        if config.get('clustering') == 'kmeans':
-            modes = self.kmeans_clustering(y, n_modes=config['n_modes'])
-        else:
-            modes = self.manual_clustering(y)
+            # Clustering
+            if config.get('clustering') == 'kmeans':
+                modes = self.kmeans_clustering(y, n_modes=config['n_modes'])
+            else:
+                modes = self.manual_clustering(y)
 
-        return {
-            'x': x,
-            'y': y,
-            'mode': modes,
-        }
+            return {
+                'x': x,
+                'y': y,
+                'mode': modes,
+            }
+        except Exception as e:
+            raise ValueError(f"Error processing dataset: {e}")
+
 
     def get_signal_stats(self, signal: np.ndarray):
         # Use percentiles to be robust to outliers

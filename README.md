@@ -15,20 +15,30 @@ The primary difference from a standard Bayesian Sequential Monte-Carlo (BSMC) id
 ### - Uncertainty estimation
 
 **Bayesian SMC**
-![BSMC](./results/run_20260406_131330/bsmc_final_params_with_uncertainty.png)
+![BSMC](./results/run_20260407_101341/bsmc_final_params_with_uncertainty.png)
 
 **Filtered SMC**
-![FSMC](./results/run_20260406_131345/fsmc_final_params_with_uncertainty.png)
+![FSMC](./results/run_20260407_101352/fsmc_final_params_with_uncertainty.png)
 
 ### - Data filtering and extrapolation
 
 *Example using synthetic data with added noise.*
 
 **Bayesian SMC**
-![BSMC](./results/run_20260406_131330/bsmc_identification_results.png)
+![BSMC](./results/run_20260407_101341/bsmc_identification_results.png)
 
 **Filtered SMC**
-![FSMC](./results/run_20260406_131345/fsmc_identification_results.png)
+![FSMC](./results/run_20260407_101352/fsmc_identification_results_iterations.png)
+
+### - Model generated output
+
+*Example using synthetic data with added noise.*
+
+**Bayesian SMC**
+![BSMC](./results/run_20260407_101341/identification_performance.png)
+
+**Filtered SMC**
+![FSMC](./results/run_20260407_101352/identification_performance.png)
 
 ### - Speed
 
@@ -49,11 +59,9 @@ Likelihood:   cauchy (sigma_obs: 0.5)
 Resampling:   Stochastic
 ==================================================
 
-
-[INFO] Starting BSMC Parameter Identification...
-
-100%|█████████████████████████████████████████████████████████████████████████████████| 2/2 [00:00<00:00, 34239.22it/s]
-Elapsed time (core): 0.1682s
+Running Initial BSMC...
+100%|█████████████| 2/2 [00:00<00:00, 24456.58it/s]
+Elapsed time (core): 0.0350s
 ```
 
 **Filtered SMC**
@@ -73,9 +81,7 @@ Likelihood:   cauchy (sigma_obs: 0.5)
 Resampling:   Stochastic
 ==================================================
 
-
-[INFO] Starting Filtered SMC Parameter Identification...
-
+Running Filtered SMC (20 iterations)...
 Iteration 1/20
 Iteration 2/20
 Iteration 3/20
@@ -96,7 +102,7 @@ Iteration 17/20
 Iteration 18/20
 Iteration 19/20
 Iteration 20/20
-Elapsed time (core): 0.1793s
+Elapsed time (core): 0.1788s
 ```
 
 

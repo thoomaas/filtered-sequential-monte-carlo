@@ -25,7 +25,7 @@ def main():
         #  0 for time-varying BSMC (Bayesian Sequential Monte-Carlo)
         #  1 for Fileterd Sequential Monte-Carlo
         #  2 for Constant parameter SMC
-        'identification_type': 2,
+        'identification_type': 1,
         # Type of resampling methodology
         #  0 for 'deterministic' (Top-N) (faster and cleaner filtering but looses particles diversity). Recommended for constant parameter identification.
         #  1 for 'stochastic' with elitism (slower but keeps particles diversity). Recommended for time-varying parameter identification.

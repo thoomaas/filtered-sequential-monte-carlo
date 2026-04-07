@@ -307,7 +307,7 @@ def plot_identification_performance(data: Dict[str, Any], results: List[Dict[str
     # Result is (K, 1), we flatten it to (K,)
     y_modeled = model.predict_vectorized(data['x'], theta_traj).flatten()
 
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8), sharex=True, gridspec_kw={'height_ratios': [3, 1]})
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(24, 6), sharex=True, gridspec_kw={'height_ratios': [3, 1]})
 
     # 1. Y Comparison Plot
     ax1.plot(data['y'], color='lightgray', alpha=0.7, label='Data $y$')

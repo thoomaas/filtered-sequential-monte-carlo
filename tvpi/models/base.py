@@ -45,6 +45,18 @@ class Model(ABC):
 
     @property
     @abstractmethod
+    def n_inputs(self) -> int:
+        """Number of input regressors expected by the model."""
+        pass
+
+    @property
+    @abstractmethod
+    def has_bias(self) -> bool:
+        """Whether the model includes an additive bias term in its parameters."""
+        pass
+
+    @property
+    @abstractmethod
     def param_names(self) -> list[str]:
         """Returns the names of the model parameters."""
         pass

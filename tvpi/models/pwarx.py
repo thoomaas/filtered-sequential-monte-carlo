@@ -16,6 +16,14 @@ class PWARXModel(Model):
         return self._n_params
 
     @property
+    def n_inputs(self) -> int:
+        return self._n_params - 1
+
+    @property
+    def has_bias(self) -> bool:
+        return True
+
+    @property
     def param_names(self) -> list[str]:
         return self._param_names
 

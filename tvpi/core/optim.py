@@ -33,9 +33,10 @@ class IdentificationScheme:
         print("\n" + "="*50)
         print("IDENTIFICATION PROBLEM SUMMARY")
         print("-" * 50)
-        print(f"Number of Input Regressors: {self.n_params - 1}")
+        print(f"Number of Input Regressors: {self.model.n_inputs}")
         print(f"Number of Modes:           {self.n_modes}")
-        print(f"Total Parameters per Mode: {self.n_params} (incl. bias)")
+        bias_str = " (incl. bias)" if self.model.has_bias else ""
+        print(f"Total Parameters per Mode: {self.n_params}{bias_str}")
 
         print("\nFitted Parameters by Mode:")
         for m in range(1, self.n_modes + 1):
@@ -74,7 +75,7 @@ class IdentificationScheme:
             for i in range(min(n_regressors, self.n_params)):
                 self.sigma_p_scaled[i] = self.sigma_p * (y_range / (x_range[i] + 1e-6))
             # Handle bias term if present
-            if self.n_params > n_regressors:
+            if self.model.has_bias and self.n_params > n_regressors:
                 self.sigma_p_scaled[-1] = self.sigma_p * y_range
 
         # Needed by the processor later
