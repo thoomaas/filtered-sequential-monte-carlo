@@ -131,7 +131,7 @@ pip install -r tvpi/requirements.txt
 python main.py
 ```
 
-This script loads experimental Excel datasets, applies preprocessing and mode clustering, runs the iterative SIR identification with moving average smoothing, and generates parameter evolution plots with uncertainty bands. Results are saved to `identification_results.json`.
+This script includes all the optimization parameters, loads experimental Excel datasets or generates synthetic data, applies preprocessing and mode clustering, runs the identification process of your choice, and generates plots. Results are saved to `identification_results.json`.
 
 ### Running Tests
 

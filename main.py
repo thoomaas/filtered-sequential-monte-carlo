@@ -27,8 +27,8 @@ def main():
         #  2 for Constant parameter SMC
         'identification_type': 2,
         # Type of resampling methodology
-        #  0 for 'deterministic' (Top-N) (faster and cleaner filtering but looses particles diversity). Recommanded for constant parameter identification.
-        #  1 for 'stochastic' with elitism (slower but keeps particles diversity). Recommanded for time-varying parameter identification.
+        #  0 for 'deterministic' (Top-N) (faster and cleaner filtering but looses particles diversity). Recommended for constant parameter identification.
+        #  1 for 'stochastic' with elitism (slower but keeps particles diversity). Recommended for time-varying parameter identification.
         'resampling_type': 1,
         # Number of initial particles. >=100 for BSMC, >=10 for filtered SMC. [int]
         'n_resample': 10,
