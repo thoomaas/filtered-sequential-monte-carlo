@@ -1,5 +1,7 @@
 import numpy as np
 from typing import Dict, Any
+from tvpi.models.gipps import GippsModel
+from tvpi.models.pwarx import PWARXModel
 
 def generate_theoretical_example(
         model_parameters,
@@ -51,7 +53,7 @@ def generate_theoretical_example(
 
     ## Output calculation
     # Prepare the True regressor matrix 'x'
-    if n_params == 6: # Gipps model
+    if isinstance(model, GippsModel): # Gipps model
         # Time steps
         dt = x_range[1] - x_range[0] if len(x_range) > 1 else 0.1
 
@@ -75,9 +77,11 @@ def generate_theoretical_example(
             vel[k] = vel[k-1] + 0.1 * np.sin(k * 0.05)
 
         x_matrix = np.vstack([vel, dist, vel_lead])
-    else:
+    elif isinstance(model, PWARXModel):
         # For the PWARX toy example, 'x' is just the time/index.
         x_matrix = x_range.reshape(1, -1)
+    else:
+        raise ValueError(f"Unknown model type: {type(model)}")
 
     # Prepare the True parameter trajectory following the mode sequence
     # Shape: (Time K, Parameters P, 1 Particle)

@@ -64,7 +64,7 @@ class IdentificationScheme:
             if len(self.sigma_p_scaled) != self.n_params:
                 raise ValueError(f"sigma_p array length ({len(self.sigma_p_scaled)}) must match model n_params ({self.n_params})")
         else:
-            # Fallback for linear PWARX models (auto-scaling based on data ranges)
+            # Fallback auto-scaling for models lacking explicit sigma_p arrays
             n_regressors = data['x'].shape[0]
             x_min = np.zeros(n_regressors)
             x_range = np.zeros(n_regressors)
