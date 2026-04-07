@@ -492,6 +492,7 @@ class FilteredSMC(IdentificationScheme):
         it = 0
         stable_count = 0
         loop_limit = self.n_iterations if isinstance(self.n_iterations, int) else self.max_iterations
+        avg_max_est_filter = np.zeros((n_modes, n_params, K), dtype=self.dtype) # Best estimates from the smoothing step
 
         while it < loop_limit:
             print(f"Iteration {it+1}/{self.n_iterations}")
@@ -521,6 +522,12 @@ class FilteredSMC(IdentificationScheme):
                     noise_block[:, idx, :] = np.random.normal(
                         0, self.sigma_p_scaled[p_idx_list], (K, self.n_sample)
                     ).astype(self.dtype)
+
+                # Elitism: Ensure the first particle (which is a copy of the previous elite)
+                # is not jittered. This allows the algorithm to converge to a stable
+                # trajectory and prevents the constant 1-sigma jitter across iterations.
+                noise_block[:, :, 0] = 0.0
+
                 # Inject noise directly into the 4D particles tensor
                 # We use tuple-based indexing to "unroll" the mode/param dimensions
                 m_idxs, p_idxs = zip(*self.identified_indices)
@@ -745,9 +752,7 @@ class FilteredSMC(IdentificationScheme):
             iteration_error = 0
             for m_idx in range(n_modes):
                 # best_estimates: (K, n_params)
-                best_estimates = resampled_particles[:, m_idx, :, 0]
-                # # y_est: (K,)
-                # y_est = np.einsum('kp,pk->k', best_estimates, phi_all)
+                best_estimates = avg_max_est_filter[m_idx, :, :].T
                 # Expand from (K, n_params) -> (K, n_params, 1) to match predict_vectorized expected shape
                 theta_expanded = best_estimates[:, :, np.newaxis]
                 # Use the model to estimae y_est
@@ -759,17 +764,15 @@ class FilteredSMC(IdentificationScheme):
             error_history.append(iteration_error)
 
             # Store current iteration's best estimates for history
-            current_it_estimates = np.zeros((n_modes, n_params, K), dtype=self.dtype)
-            for m_idx in range(n_modes):
-                current_it_estimates[m_idx, :, :] = resampled_particles[:, m_idx, :, 0].T
-            history_estimates.append(current_it_estimates)
+            # using the smoothed profile (avg_max_est_filter)
+            history_estimates.append(avg_max_est_filter.copy())
 
             # Calculate the maximum absolute change across all modes, params, and time steps
             if it > 0:
                 prev_estimates = history_estimates[-2]
 
                 # 1. Vectorized Absolute Difference (M*P, K)
-                flat_diff = np.abs(current_it_estimates - prev_estimates).reshape(-1, K)
+                flat_diff = np.abs(avg_max_est_filter - prev_estimates).reshape(-1, K)
                 flat_smoothed = np.zeros_like(flat_diff)
 
                 # 2. Collect all sigmas into a flat array to match flat_diff rows
@@ -848,7 +851,7 @@ class FilteredSMC(IdentificationScheme):
             for m_idx in range(n_modes):
                 m_num = m_idx + 1
                 step_res['resampled'][m_num] = resampled_particles[k, m_idx, :, :]
-                step_res['estimates'][m_num] = resampled_particles[k, m_idx, :, 0]
+                step_res['estimates'][m_num] = avg_max_est_filter[m_idx, :, k]
                 step_res['uncertainty'][m_num] = uncertainty_matrix[k, m_idx, :]
             final_results.append(step_res)
 

@@ -23,7 +23,7 @@ def main():
     identification_params = {
         # Type of parameter identification scheme
         #  0 for time-varying BSMC (Bayesian Sequential Monte-Carlo)
-        #  1 for Fileterd Sequential Monte-Carlo
+        #  1 for Filtered Sequential Monte-Carlo
         #  2 for Constant parameter SMC
         'identification_type': 1,
         # Type of resampling methodology

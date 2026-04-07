@@ -131,6 +131,8 @@ def plot_results(data: Dict[str, Any], results: List[Dict[str, Any]], save_path:
         ax.legend()
         ax.grid(True)
 
+    plt.tight_layout()
+
     if save_path:
         plt.savefig(save_path)
         plt.close()

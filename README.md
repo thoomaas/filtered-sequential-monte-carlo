@@ -15,30 +15,30 @@ The primary difference from a standard Bayesian Sequential Monte-Carlo (BSMC) id
 ### - Uncertainty estimation
 
 **Bayesian SMC**
-![BSMC](./results/run_20260407_101341/bsmc_final_params_with_uncertainty.png)
+![BSMC](./results/run_20260407_153533/bsmc_final_params_with_uncertainty.png)
 
 **Filtered SMC**
-![FSMC](./results/run_20260407_101352/fsmc_final_params_with_uncertainty.png)
+![FSMC](./results/run_20260407_153143/fsmc_final_params_with_uncertainty.png)
 
 ### - Data filtering and extrapolation
 
 *Example using synthetic data with added noise.*
 
 **Bayesian SMC**
-![BSMC](./results/run_20260407_101341/bsmc_identification_results.png)
+![BSMC](./results/run_20260407_153533/bsmc_identification_results.png)
 
 **Filtered SMC**
-![FSMC](./results/run_20260407_101352/fsmc_identification_results_iterations.png)
+![FSMC](./results/run_20260407_153143/fsmc_identification_results_iterations.png)
 
 ### - Model generated output
 
 *Example using synthetic data with added noise.*
 
 **Bayesian SMC**
-![BSMC](./results/run_20260407_101341/identification_performance.png)
+![BSMC](./results/run_20260407_153533/identification_performance.png)
 
 **Filtered SMC**
-![FSMC](./results/run_20260407_101352/identification_performance.png)
+![FSMC](./results/run_20260407_153143/identification_performance.png)
 
 ### - Speed
 
@@ -197,7 +197,8 @@ Improvements have been done to:
 
 - the code structure,
 - computation is vectorized,
-- added stochastic resampling,
+- we use the best estimate from the smoothing weights as output best estimate,
+- added stochastic resampling with elitism,
 - added smoothed anchors (time-filtered anchors for linear extrapolation),
 - added safe anchors (time margin between mode switch),
 - added filtering distribution choice,
